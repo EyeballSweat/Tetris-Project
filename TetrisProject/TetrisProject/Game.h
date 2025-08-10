@@ -29,6 +29,7 @@ private:
     void IncreaseLevelIfNeeded();
     int PointsForClear(int cleared) const;
     void HardDrop();
+    void DrawControls() const;
 };
 
 #endif

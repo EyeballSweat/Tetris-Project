@@ -4,6 +4,7 @@
 static const int CELL_SIZE = 24;
 static const int BOARD_X = 100;
 static const int BOARD_Y = 50;
+const Color RAYGRAY = { 150, 150, 150, 255 }; // RGB + Alpha
 
 Game::Game()
     : current(static_cast<TetrominoType>(GetRandomValue(0, 6))),
@@ -94,6 +95,25 @@ void Game::Draw() {
         DrawText("GAME OVER", 300, 250, 40, RED);
         DrawText("Press ENTER to restart", 280, 300, 20, RAYWHITE);
     }
+
+    DrawControls();
+}
+
+void Game::DrawControls() const {
+    int x = BOARD_X + BOARD_WIDTH * CELL_SIZE + 30;  // Position controls right of board
+    int y = BOARD_Y + 240;
+
+    DrawText("Controls:", x, y, 20, RAYWHITE);
+    y += 30;
+    DrawText("Left / Right Arrows: Move", x, y, 18, RAYGRAY);
+    y += 25;
+    DrawText("Up Arrow: Rotate", x, y, 18, RAYGRAY);
+    y += 25;
+    DrawText("Down Arrow: Soft Drop", x, y, 18, RAYGRAY);
+    y += 25;
+    DrawText("Space: Hard Drop", x, y, 18, RAYGRAY);
+    y += 25;
+    DrawText("Enter: Restart (game over)", x, y, 18, RAYGRAY);
 }
 
 void Game::SpawnTetromino() {
