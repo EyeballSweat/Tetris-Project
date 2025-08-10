@@ -1,13 +1,17 @@
 #include "Tetromino.h"
 #include "raylib.h"
 
+static const int BOARD_X = 100;
+static const int BOARD_Y = 50;
+
 Tetromino::Tetromino(TetrominoType t) : type(t), rotationIndex(0), posX(3), posY(0) {
     InitShapes();
 }
 
 void Tetromino::InitShapes() {
     rotations.clear();
-    ShapeRotation rot{};
+    ShapeRotation r; // temp
+
     switch (type) {
     case I:
         rotations = {
@@ -85,9 +89,26 @@ void Tetromino::Draw(int cellSize) const {
     for (int row = 0; row < 4; row++) {
         for (int col = 0; col < 4; col++) {
             if (shape.cells[row][col]) {
-                DrawRectangle((posX + col) * cellSize + 100,
-                    (posY + row) * cellSize + 50,
-                    cellSize - 1, cellSize - 1, RED);
+                int sx = BOARD_X + (posX + col) * cellSize;
+                int sy = BOARD_Y + (posY + row) * cellSize;
+                DrawRectangle(sx, sy, cellSize - 1, cellSize - 1, RED);
+            }
+        }
+    }
+}
+
+void Tetromino::DrawAt(int originX, int originY, int cellSize) const {
+    // draw using relative 4x4 box anchored top-left at originX, originY
+    const auto& shape = GetShape();
+    for (int row = 0; row < 4; row++) {
+        for (int col = 0; col < 4; col++) {
+            if (shape.cells[row][col]) {
+                int sx = originX + col * cellSize;
+                int sy = originY + row * cellSize;
+                DrawRectangle(sx, sy, cellSize - 1, cellSize - 1, RED);
+            }
+            else {
+                DrawRectangleLines(originX + col * cellSize, originY + row * cellSize, cellSize, cellSize, DARKGRAY);
             }
         }
     }

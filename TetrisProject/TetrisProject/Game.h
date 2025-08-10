@@ -3,6 +3,7 @@
 
 #include "Board.h"
 #include "Tetromino.h"
+#include <string>
 
 class Game {
 public:
@@ -18,8 +19,16 @@ private:
     float fallInterval;
     bool gameOver;
 
+    // scoring / level
+    int score;
+    int linesCleared;
+    int level;
+
     void SpawnTetromino();
-    void LockPiece();
+    void LockPiece(int dropDistance = 0);
+    void IncreaseLevelIfNeeded();
+    int PointsForClear(int cleared) const;
+    void HardDrop();
 };
 
 #endif

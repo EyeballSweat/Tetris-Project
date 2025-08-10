@@ -18,7 +18,8 @@ public:
     int GetX() const;
     int GetY() const;
     const ShapeRotation& GetShape() const;
-    void Draw(int cellSize) const;
+    void Draw(int cellSize) const;              // draw on main board (uses hardcoded board origin)
+    void DrawAt(int originX, int originY, int cellSize) const; // draw at arbitrary screen origin (preview)
 
 private:
     TetrominoType type;
